@@ -1,34 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatTableModule, MatPaginatorModule, MatButtonModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatTableModule, MatPaginatorModule, MatButtonModule, MatInputModule, MatProgressSpinnerModule, MatCardModule } from '@angular/material';
 
 import { SatPopoverModule } from '@ncstate/sat-popover';
 
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { TableComponent } from './table/table.component';
-import { HomeComponent } from './home/home.component';
-import { LikedComponent } from './liked/liked.component';
-import { DeletedComponent } from './deleted/deleted.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { TableComponent } from './components/table/table.component';
+import { HomeComponent } from './components/home/home.component';
+import { environment } from '../environments/environment';
+import { DataServiceService } from './services/data-service.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     TableComponent,
-    HomeComponent,
-    LikedComponent,
-    DeletedComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
     BrowserAnimationsModule,
     SatPopoverModule,
     MatToolbarModule,
@@ -36,10 +32,14 @@ import { DeletedComponent } from './deleted/deleted.component';
     MatSidenavModule,
     MatListModule,
     MatTableModule,
+    MatButtonModule,
     MatPaginatorModule,
-    
+    HttpClientModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
-  providers: [],
+  providers: [DataServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

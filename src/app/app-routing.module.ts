@@ -1,23 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { LikedComponent } from './liked/liked.component';
-import { DeletedComponent } from './deleted/deleted.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  {
-    path: 'all',
-    component: HomeComponent
-  },
-  {
-    path: 'liked',
-    component: LikedComponent
-  },
-  {
-    path: 'deleted',
-    component: DeletedComponent
-  }
+  { path: 'all', component: HomeComponent, data: {type: 'all'} },
+  { path: 'liked', component: HomeComponent, data: {type: 'like'} },
+  { path: 'deleted', component: HomeComponent, data: {type: 'delete'} },
+  { path: '**', redirectTo: 'all' }
 ];
 
 @NgModule({
