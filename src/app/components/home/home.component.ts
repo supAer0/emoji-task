@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataServiceService } from 'src/app/services/data-service.service';
-import { Emoji } from 'src/app/models/emoji';
 import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs/internal/Observable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +9,21 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class HomeComponent implements OnInit {
   public searchName$ = new Subject<string>();
+  title: string;
+  searchNameText: string;
 
-  constructor() { 
+  constructor(private route: ActivatedRoute) { 
     this.searchName$.subscribe();
   }
 
   ngOnInit(){
+    this.route.data.subscribe((data: { title: string }) => {
+      this.title = data.title;
+    });
+    this.searchName$.subscribe( v =>
+      this.searchNameText = v
+    )
+
   }
 
 }

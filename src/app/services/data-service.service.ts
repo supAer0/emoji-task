@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { HttpClient } from '@angular/common/http';
 import { Emoji, IEmoji } from '../models/emoji';
-import { map, toArray, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 const LIKED_STORAGE = 'liked';
@@ -16,6 +16,7 @@ export class DataServiceService {
   constructor(private httpClient: HttpClient, @Inject(LOCAL_STORAGE) private storage: StorageService) {}
 
   gitApiUrl: string = 'https://api.github.com';
+
   public getEmojis(type: string){
     switch(type) {
       case 'like': return new Observable<Emoji[]> ((observer) => observer.next(this.storage.get(LIKED_STORAGE)));
@@ -28,7 +29,10 @@ export class DataServiceService {
     let emojis: Emoji[] = [];
     for(let key in e) {
       let emoji = new Emoji(key, e[key], false, false);
-      if (this.chechEmojiOnStorage(LIKED_STORAGE, emoji.name)) {
+      if (this.checkEmojiOnStorage(DELETED_STORAGE, emoji.name)) {
+        continue;
+      }
+      if (this.checkEmojiOnStorage(LIKED_STORAGE, emoji.name)) {
         emoji.isLike = true;
       }
       emojis.push(emoji);
@@ -39,6 +43,21 @@ export class DataServiceService {
   public likeEmoji(emoji: Emoji) {
     emoji.isLike = true;
     this.addEmojiToStorage(LIKED_STORAGE, emoji);
+  }
+
+  public unLikeEmoji(emoji: Emoji) {
+    emoji.isLike = false;
+    this.removeEmojiFromStorage(LIKED_STORAGE, emoji);
+  }
+
+  public deleteEmoji(emoji: Emoji) {
+    emoji.isDelete = true;
+    this.addEmojiToStorage(DELETED_STORAGE, emoji);
+  }
+
+  public unDeleteEmoji(emoji: Emoji) {
+    emoji.isDelete = false;
+    this.removeEmojiFromStorage(DELETED_STORAGE, emoji);
   }
 
   public addEmojiToStorage(key: string, emoji: Emoji) {
@@ -53,21 +72,20 @@ export class DataServiceService {
     }
   }
 
-  public chechEmojiOnStorage(key: string, emojiName: string) {
+  public removeEmojiFromStorage(key: string, emoji: Emoji) {
+    let storageArray = this.storage.get(key);
+    for (let i = 0; i < storageArray.length; i++) {
+      if (storageArray[i].name === emoji.name) {
+        storageArray.splice(i,1);
+        this.storage.set(key, storageArray);
+        return;
+      }
+    }
+  }
+
+  public checkEmojiOnStorage(key: string, emojiName: string) {
     if (this.storage.has(key)){
       return this.storage.get(key).some((e: Emoji) => e.name === emojiName)
     }
   }
-
-  // public getEmojiInStorageByName(key: string, name: string): Emoji {
-  //   if (this.storage.has(key)){
-  //     let storageArray = this.storage.get(key);
-  //     storageArray.forEach((e: Emoji) => {
-  //       if (e.name === name) {
-  //         return e;
-  //       }
-  //     });
-  //   }
-  //   return null;
-  // }
 }

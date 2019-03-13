@@ -1,9 +1,9 @@
 <div>
   <mat-toolbar class="header">
-    <h1>Все</h1>
+    <h1>{{title}}</h1>
     <span class="spacer"></span>
     <mat-form-field id="searchField" floatLabel="never">
-      <input matInput (keyup)="searchName$.next($event.target.value)" placeholder="Поиск по названию...">
+      <input matInput (keyup)="searchName$.next($event.target.value)" value="{{searchNameText}}" placeholder="Поиск по названию...">
     </mat-form-field></mat-toolbar>
   <div class="container-content">
     <app-table [searchName$]="searchName$"></app-table>

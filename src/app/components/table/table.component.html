@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8 main_content">
-  <table mat-table *ngIf="!isLoading" [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="mat-elevation-z8">
+  <table mat-table *ngIf="!isLoading" [dataSource]="dataSource">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Название </th>
@@ -17,7 +17,7 @@
         [satPopoverAnchorFor]="imgView"
         (mouseenter)="imgView.open()"
         (mouseleave)="imgView.close()"
-        src="{{element.url}}" 
+        src="{{element.url}}"
         alt="" class="image-preview">
 
       <sat-popover #imgView horizontalAlign="after" verticalAlign="below">
@@ -32,11 +32,17 @@
       <th mat-header-cell *matHeaderCellDef> Действия </th>
       <td mat-cell *matCellDef="let element"> 
         <div class="button-row">
-          <button (click)="like(element)" mat-icon-button>
+          <button *ngIf="type === 'all'" (click)="like(element)" mat-icon-button>
             <mat-icon [ngClass]="{isLike:element.isLike}">star</mat-icon>
           </button>
-          <button mat-icon-button>
+          <button *ngIf="type === 'all'" (click)="delete(element)" mat-icon-button>
             <mat-icon>delete</mat-icon>
+          </button>
+          <button *ngIf="type === 'like'" (click)="deleteFromLikeList(element)" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+          <button *ngIf="type === 'delete'" (click)="unDelete(element)" mat-icon-button>
+            <mat-icon>refresh</mat-icon>
           </button>
         </div>
       </td>

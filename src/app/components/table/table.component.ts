@@ -27,6 +27,32 @@ export class TableComponent implements OnInit {
     emoji.isLike = true;
   }
 
+  public deleteFromTableData(emoji: Emoji) {
+    let recIndex = this.tableData.findIndex(e => e.name === emoji.name);
+    if (recIndex >= 0) {
+      this.tableData.splice(recIndex, 1);
+      this.searchName$.next('');
+    }
+  }
+
+  public unDelete(emoji: Emoji) {
+    this.dataSvc.unDeleteEmoji(emoji);
+    this.deleteFromTableData(emoji);
+  }
+
+  public delete(emoji: Emoji) {
+    if (emoji.isLike) {
+      this.dataSvc.unLikeEmoji(emoji);
+    }
+    this.dataSvc.deleteEmoji(emoji);
+    this.deleteFromTableData(emoji);
+  }
+
+  public deleteFromLikeList(emoji: Emoji) {
+    this.dataSvc.unLikeEmoji(emoji);
+    this.deleteFromTableData(emoji);
+  }
+
   public searchByName(name: string) {
     if (name === '') {
       this.dataSource.data = this.tableData;
@@ -55,7 +81,6 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: { type: string }) => {
       this.type = data.type;
-      // console.log(this.type);
     });
 
     this.startLoading()
