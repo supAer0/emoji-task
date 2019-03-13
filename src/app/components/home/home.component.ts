@@ -13,17 +13,15 @@ export class HomeComponent implements OnInit {
   searchNameText: string;
 
   constructor(private route: ActivatedRoute) { 
-    this.searchName$.subscribe();
+    this.searchName$.subscribe( v =>
+      this.searchNameText = v
+    )
   }
 
   ngOnInit(){
     this.route.data.subscribe((data: { title: string }) => {
       this.title = data.title;
     });
-    this.searchName$.subscribe( v =>
-      this.searchNameText = v
-    )
-
   }
 
 }
