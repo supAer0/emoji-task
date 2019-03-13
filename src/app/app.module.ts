@@ -9,7 +9,6 @@ import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatTa
 
 import { SatPopoverModule } from '@ncstate/sat-popover';
 
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TableComponent } from './components/table/table.component';
 import { HomeComponent } from './components/home/home.component';
 import { environment } from '../environments/environment';
@@ -18,7 +17,6 @@ import { DataServiceService } from './services/data-service.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
     TableComponent,
     HomeComponent
   ],

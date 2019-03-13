@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { Emoji } from 'src/app/models/emoji';
-import { DataServiceService } from 'src/app/services/data-service.service';
+import { Emoji } from '../../models/emoji';
+import { DataServiceService } from '../../services/data-service.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 

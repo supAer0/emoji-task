@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { HttpClient } from '@angular/common/http';
-import { Emoji, IEmoji } from '../models/emoji';
+import { Emoji } from '../models/emoji';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
