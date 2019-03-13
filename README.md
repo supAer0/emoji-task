@@ -1,4 +1,4 @@
-# EmojiTask [DEMO](https://pariwvpj.github.stackblitz.io/) 
+# EmojiTask [DEMO(stackblitz)](https://stackblitz.com/github/supAer0/emoji-task) 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.4.
 
